@@ -1,9 +1,29 @@
+<%@page import="java.util.List"%>
+<%@page import="com.gray.tutiontribe.entity.User"%>
+<%@page import="com.gray.tutiontribe.entity.Branch"%>
+<%@page import="com.gray.tutiontribe.information.BranchManagerRemote"%>
+<%@page import="com.gray.tutiontribe.entity.UserRole"%>
+<%@page import="javax.naming.InitialContext"%>
+<%@page import="com.gray.tutiontribe.information.UserRoleManagerRemote"%>
 <!DOCTYPE html>
+<%
+
+    if (session.getAttribute("domain-user") == null) {
+        response.sendRedirect("/TutionTribe-Main-Web/Client-backend/User-login/");
+    } else {
+        UserRoleManagerRemote urmr = (UserRoleManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.UserRoleManagerRemote");
+        BranchManagerRemote bmr = (BranchManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.BranchManagerRemote");
+        User domainUser = (User) session.getAttribute("domain-user");
+        List<Branch> branchs = bmr.getAllbranches(domainUser);
+        List<UserRole> userRoles = urmr.getAllUserRoles(domainUser);
+
+
+%>
 <html lang="en">
     <head>
         <!-- Required meta tags -->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <title>Plus Admin</title>
+        <title>Tution-Tribe Admin</title>
         <!-- plugins:css -->
         <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
         <link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css">
@@ -59,46 +79,58 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Register User</h4>
                                     <p class="card-description">Register all your admins and students here</p>
-                                    <form class="forms-sample" method="POST" action="RegisterUser">
+                                    <form class="forms-sample" id="userRegi" onsubmit="return false">
                                         <div class="form-group">
                                             <label for="exampleInputName1">Name</label>
-                                            <input type="text" class="form-control" name="name" id="exampleInputName1" placeholder="Name">
+                                            <input type="text" class="form-control" name="name" id="userName" placeholder="Name">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputName1">Contact number</label>
-                                            <input type="text" class="form-control" name="number" id="exampleInputName1" placeholder="Contact number">
+                                            <input type="text" class="form-control" name="number" id="userNumber" placeholder="Contact number">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail3">Email address</label>
-                                            <input type="email" class="form-control" name="email" id="exampleInputEmail3" placeholder="Email">
+                                            <input type="email" class="form-control" name="email" id="userEmail" placeholder="Email">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputPassword4">Password</label>
-                                            <input type="password" class="form-control" name="password" id="exampleInputPassword4" placeholder="Password">
+                                            <input type="password" class="form-control" name="password" id="userPassword" placeholder="Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputDob">Age</label>
+                                            <input type="range" class="form-control" name="age" id="userAge" placeholder="18">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleSelectGender">Gender</label>
-                                            <select class="form-control" name="gender" id="exampleSelectGender">
+                                            <select class="form-control" name="gender" id="userGender">
                                                 <option>Male</option>
                                                 <option>Female</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleTextarea1">Address</label>
-                                            <textarea class="form-control" name="address" id="exampleTextarea1" rows="4" placeholder="Address"></textarea>
+                                            <textarea class="form-control" name="address" id="userAddress" rows="4" placeholder="Address"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleSelectGender">Branch</label>
-                                            <select class="form-control" name="branch" id="exampleSelectGender">
-                                                <option>Branch 1</option>
-                                                <option>Branch 2</option>
+                                            <select class="form-control" name="branch" id="userBranch">
+                                                <%                                                    for (Branch b : branchs) {
+                                                %>
+                                                <option><%= b.getName()%></option>
+
+                                                <%
+                                                    }
+                                                %>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleSelectGender">User Role</label>
-                                            <select class="form-control" name="userRole" id="exampleSelectGender">
-                                                <option>Role 1</option>
-                                                <option>Role 2</option>
+                                            <select class="form-control" name="userRole" id="userRole">
+                                                <%
+                                                    for (UserRole ur : userRoles) {
+                                                %><option><%= ur.getRoleName()%></option><%
+                                                    }
+                                                %>
                                             </select>
                                         </div>
                                         <button type="submit" class="btn btn-primary me-2"> Save user </button>
@@ -188,5 +220,40 @@
         <!-- Custom js for this page -->
         <script src="assets/js/dashboard.js"></script>
         <!-- End custom js for this page -->
+        <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+        <script>
+            $("#userRegi").submit(function (event) {
+                var formData = {
+                    name: $("#userName").val(),
+                    number: $("#userNumber").val(),
+                    email: $("#userEmail").val(),
+                    password: $("#userPassword").val(),
+                    address: $("#userAddress").val(),
+                    age: $("#userAge").val(),
+                    branch: $("#userBranch").val(),
+                    role: $("#userRole").val(),
+                    gender: $("#userGender").val()
+                };
+                $.ajax({
+                    url: "/TutionTribe-Main-Web/servlet-user-register",
+                    dataType: 'json',
+                    data: formData,
+                    type: 'POST',
+                    success: function (data) {
+                        if(data.responseText==="Success"){
+                            alert("User entered Successful");
+                        }else{
+                            alert("Error In Data Insertion");
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }});
+                event.preventDefault();
+            });
+
+        </script>
     </body>
 </html>
+<%
+    }%>

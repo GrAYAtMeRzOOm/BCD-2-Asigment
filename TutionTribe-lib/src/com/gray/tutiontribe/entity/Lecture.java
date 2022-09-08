@@ -31,10 +31,10 @@ public class Lecture implements Serializable {
     private Timestamp startedTime;
     private Timestamp endedTime;
     private String subject;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "branch_id", referencedColumnName = "id")
     private Branch branch;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "presented_user_id", referencedColumnName = "id")
     private User presentedUser;
     

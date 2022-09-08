@@ -26,7 +26,7 @@ public class Branch implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String city;
-
+    private String name;
     @ManyToOne
     @JoinColumn(name = "institute_id", nullable = false)
     private Institute institute;
@@ -40,6 +40,14 @@ public class Branch implements Serializable {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCity() {

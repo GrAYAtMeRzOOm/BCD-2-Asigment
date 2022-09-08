@@ -5,6 +5,7 @@
 package com.gray.tutiontribe.information;
 
 import com.gray.tutiontribe.entity.Lecture;
+import com.gray.tutiontribe.entity.User;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -15,9 +16,9 @@ import javax.ejb.Remote;
 @Remote
 public interface LectureManagerRemote {
 
-    Lecture saveLecture(Lecture lecture) throws RuntimeException;
+    Lecture saveLecture(User u,Lecture lecture) throws RuntimeException;
 
-    Lecture getLectureById(long id) throws RuntimeException;
+    Lecture getLectureById(User u,long id) throws RuntimeException;
 
-    List<Lecture> getAllLecture() throws RuntimeException;    
+    List<Lecture> getAllLecture(User u) throws RuntimeException;    
 }

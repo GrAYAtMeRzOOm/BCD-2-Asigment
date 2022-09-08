@@ -5,6 +5,7 @@
 package com.gray.tutiontribe.information;
 
 import com.gray.tutiontribe.entity.Institute;
+import com.gray.tutiontribe.entity.User;
 import javax.ejb.Remote;
 
 /**
@@ -14,10 +15,10 @@ import javax.ejb.Remote;
 @Remote
 public interface InstituteManagerRemote {
 
-    Institute saveInstitute(Institute institute) throws RuntimeException;
+    Institute saveInstitute(User u,Institute institute) throws RuntimeException;
 
-    Institute getInstituteById(long id)throws RuntimeException;
+    Institute getInstituteById(User u,long id)throws RuntimeException;
 
-    Institute getInstituteByName(String name);
+    Institute getInstituteByName(User u,String name);
     
 }

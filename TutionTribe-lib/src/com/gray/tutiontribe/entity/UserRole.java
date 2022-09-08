@@ -7,6 +7,7 @@ package com.gray.tutiontribe.entity;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class UserRole implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String roleName;
-    @OneToMany(mappedBy = "userRole")
+    @OneToMany(mappedBy = "userRole",fetch = FetchType.EAGER)
     private Set<User> roleUsers;
 
     public Set<User> getRoleUsers() {

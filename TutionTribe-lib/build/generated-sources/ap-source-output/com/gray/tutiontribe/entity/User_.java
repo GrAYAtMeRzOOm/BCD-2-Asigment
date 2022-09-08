@@ -3,20 +3,18 @@ package com.gray.tutiontribe.entity;
 import com.gray.tutiontribe.entity.Attendance;
 import com.gray.tutiontribe.entity.Branch;
 import com.gray.tutiontribe.entity.UserRole;
-import java.sql.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-09-07T21:57:00")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-09-09T01:02:50")
 @StaticMetamodel(User.class)
 public class User_ { 
 
     public static volatile SingularAttribute<User, String> password;
     public static volatile SingularAttribute<User, String> address;
     public static volatile SingularAttribute<User, String> gender;
-    public static volatile SingularAttribute<User, Date> dob;
     public static volatile SingularAttribute<User, String> contact;
     public static volatile SingularAttribute<User, String> name;
     public static volatile SingularAttribute<User, Long> id;

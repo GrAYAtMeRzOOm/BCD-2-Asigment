@@ -5,6 +5,8 @@
 package com.gray.tutiontribe.information;
 
 import com.gray.tutiontribe.entity.Branch;
+import com.gray.tutiontribe.entity.User;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -14,10 +16,14 @@ import javax.ejb.Remote;
 @Remote
 public interface BranchManagerRemote {
 
-    Branch saveBranch(Branch branch) throws RuntimeException;
+    Branch saveBranch(User u,Branch branch) throws RuntimeException;
 
-    Branch getBranchByCity(String city) throws RuntimeException;
+    Branch getBranchByCity(User u,String city) throws RuntimeException;
 
-    Branch getBranchById(long id) throws RuntimeException;
+    Branch getBranchById(User u,long id) throws RuntimeException;
+    
+    Branch getBranchByName(User u,String name) throws RuntimeException;
+
+    List<Branch> getAllbranches(User u);
     
 }

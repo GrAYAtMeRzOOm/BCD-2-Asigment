@@ -28,7 +28,6 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date dob;
     private String name;
     private String password;
     private String email;
@@ -39,7 +38,7 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name="branch_id", nullable=false)
     private Branch branch;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_role_id", referencedColumnName = "id")
     private UserRole userRole;
     
@@ -94,13 +93,6 @@ public class User implements Serializable {
         this.branch = branch;
     }
     
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
 
     public String getName() {
         return name;

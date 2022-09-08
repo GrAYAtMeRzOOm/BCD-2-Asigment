@@ -4,6 +4,7 @@
  */
 package com.gray.tutiontribe.information;
 
+import com.gray.tutiontribe.entity.Branch;
 import com.gray.tutiontribe.entity.User;
 import com.gray.tutiontribe.entity.UserRole;
 import java.util.List;
@@ -16,12 +17,16 @@ import javax.ejb.Remote;
 @Remote
 public interface UserManagerRemote {
 
-    User saveUser(User user) throws RuntimeException;
+    User saveUser(User user,UserRole role, Branch branch) throws RuntimeException;
 
-    User getUserById(long id) throws RuntimeException;
+    User getUserById(User u,long id) throws RuntimeException;
 
-    User getUserByContact(String contact) throws RuntimeException;
+    User getUserByContact(User u,String contact) throws RuntimeException;
 
-    List<User> getAllUsers() throws RuntimeException;
+    List<User> getAllUsers(User u) throws RuntimeException;
+    
+    List<User> getAllUsersByRole(String role) throws RuntimeException;
+
+    User userLogin(String email, String password) throws RuntimeException;
 
 }

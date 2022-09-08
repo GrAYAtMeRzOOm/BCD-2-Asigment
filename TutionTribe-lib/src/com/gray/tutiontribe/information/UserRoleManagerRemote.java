@@ -4,6 +4,7 @@
  */
 package com.gray.tutiontribe.information;
 
+import com.gray.tutiontribe.entity.User;
 import com.gray.tutiontribe.entity.UserRole;
 import java.util.List;
 import javax.ejb.Remote;
@@ -15,6 +16,8 @@ import javax.ejb.Remote;
 @Remote
 public interface UserRoleManagerRemote {
 
-    List<UserRole> getAllUserRoles() throws RuntimeException;
+    List<UserRole> getAllUserRoles(User u) throws RuntimeException;
+    
+    UserRole getRoleByName(User u,String name) throws RuntimeException;
     
 }
