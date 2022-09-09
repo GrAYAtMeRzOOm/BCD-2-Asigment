@@ -4,6 +4,7 @@
  */
 package com.gray.tutiontribe.attendance;
 
+import com.gray.tutiontribe.entity.Attendance;
 import com.gray.tutiontribe.entity.Lecture;
 import com.gray.tutiontribe.entity.User;
 import javax.ejb.Remote;
@@ -15,6 +16,8 @@ import javax.ejb.Remote;
 @Remote
 public interface AttendanceManagerRemote {
 
-    void setAttendanceToStudent(Lecture lecture, User student);
+    Attendance saveAttendance(Attendance attendance) throws RuntimeException;
+
+    
     
 }

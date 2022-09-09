@@ -9,12 +9,13 @@ import java.sql.Timestamp;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -29,22 +30,30 @@ public class Attendance implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Timestamp dateTime;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "lecturer_id", referencedColumnName = "id")
     private User lecturer;
-    @ManyToMany
-    private Set<User> students;
+    @OneToMany(mappedBy = "attendance",fetch = FetchType.EAGER)
+    private Set<UserAttendance> userAttendances;
 
     @ManyToOne
     @JoinColumn(name = "lecture_id", nullable = false)
     private Lecture lecture;
-    
+
     public Timestamp getDateTime() {
         return dateTime;
     }
 
     public void setDateTime(Timestamp dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public Lecture getLecture() {
+        return lecture;
+    }
+
+    public void setLecture(Lecture lecture) {
+        this.lecture = lecture;
     }
 
     public User getLecturer() {
@@ -55,14 +64,14 @@ public class Attendance implements Serializable {
         this.lecturer = lecturer;
     }
 
-    public Set<User> getStudents() {
-        return students;
+    public Set<UserAttendance> getUserAttendances() {
+        return userAttendances;
     }
 
-    public void setStudents(Set<User> students) {
-        this.students = students;
+    public void setUserAttendances(Set<UserAttendance> userAttendances) {
+        this.userAttendances = userAttendances;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -95,5 +104,5 @@ public class Attendance implements Serializable {
     public String toString() {
         return "com.gray.tutiontribe.enitity.Attendance[ id=" + id + " ]";
     }
-    
+
 }

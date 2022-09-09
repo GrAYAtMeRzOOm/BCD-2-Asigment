@@ -55,7 +55,7 @@ public class InstituteManager implements InstituteManagerRemote {
     @Override
     public Institute getInstituteByName(User u,String name) {
         if (!name.equals("")) {
-            Query query = em.createQuery("SELECT i FROM Institute i WHERE i.name:name");
+            Query query = em.createQuery("SELECT i FROM Institute i WHERE i.name=:name");
             query.setParameter("name", name);
             Institute institute = (Institute) query.getSingleResult();
             return institute;

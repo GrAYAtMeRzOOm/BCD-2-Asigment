@@ -28,6 +28,7 @@
         User domainUser = (User) session.getAttribute("domain-user");
         List<Branch> branchs = bmr.getAllbranches(domainUser);
         Set<User> userRoles = umr.getRoleByName(domainUser, "Staff").getRoleUsers();
+        Set<User> students = umr.getRoleByName(domainUser, "Student").getRoleUsers();
         List<Lecture> lectures = lmr.getAllLecture(domainUser);
 
 %>
@@ -132,6 +133,92 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-6 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Add Student</h4>
+                                        <p class="card-description">Add Student to Lecture</p>
+                                        <form class="forms-sample">
+                                            <div class="form-group">
+                                                <label for="slist">Select Student</label>
+                                                <select class="form-control" name="student" id="slist">
+                                                    <%
+                                                        for (User u : students) {
+                                                    %><option><%= u.getContact() + "-" + u.getName()%></option><%
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="leclist">Select Lecture</label>
+                                                <select class="form-control" name="lecture" id="leclist">
+                                                    <%
+                                                        for (Lecture lecture : lectures) {
+                                                    %><option><%= lecture.getId() + "-" + lecture.getSubject()%></option><%
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary me-2"> Add Lecture </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Mark Attendance</h4>
+                                        <p class="card-description">mark student attendance of lecture</p>
+                                        <form class="forms-sample">
+                                            <div class="form-group row">
+                                                <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Email</label>
+                                                <select class="form-control" name="lecture" id="leclist">
+                                                    <%
+                                                        for (Lecture lecture : lectures) {
+                                                    %><option><%= lecture.getId() + "-" + lecture.getSubject()%></option><%
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Email</label>
+                                                <select class="form-control" name="lecture" id="leclist">
+                                                    <%
+                                                        for (Lecture lecture : lectures) {
+                                                    %><option><%= lecture.getId() + "-" + lecture.getSubject()%></option><%
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="exampleInputMobile" class="col-sm-3 col-form-label">Mobile</label>
+                                                <select class="form-control" name="lecture" id="leclist">
+                                                    <%
+                                                        for (Lecture lecture : lectures) {
+                                                    %><option><%= lecture.getId() + "-" + lecture.getSubject()%></option><%
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="tstus" class="col-sm-3 col-form-label">Status</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="status" placeholder="status" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Re Password</label>
+                                                <div class="col-sm-9">
+                                                    <input type="password" class="form-control" id="exampleInputConfirmPassword2" placeholder="Password" />
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary me-2"> Submit </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-lg-6 grid-margin stretch-card">
                                 <div class="card">
                                     <div class="card-body">
@@ -152,11 +239,11 @@
                                                         for (Lecture lecture : lectures) {
                                                     %>
                                                     <tr>
-                                                        <td><%= lecture.getId() %></td>
-                                                        <td><%= lecture.getSubject() %></td>
-                                                        <td><%= lecture.getStartedTime() %></td>
-                                                        <td><%= lecture.getEndedTime() %></td>
-                                                        <td><%= lecture.getPresentedUser().getName() %></td>
+                                                        <td><%= lecture.getId()%></td>
+                                                        <td><%= lecture.getSubject()%></td>
+                                                        <td><%= lecture.getStartedTime()%></td>
+                                                        <td><%= lecture.getEndedTime()%></td>
+                                                        <td><%= lecture.getPresentedUser().getName()%></td>
                                                     </tr>
                                                     <%
                                                         }

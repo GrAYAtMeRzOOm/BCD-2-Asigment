@@ -66,5 +66,4 @@ public class LectureManager implements LectureManagerRemote {
         query.select(variableRoot);
         return em.createQuery(query).getResultList();
     }
-
 }

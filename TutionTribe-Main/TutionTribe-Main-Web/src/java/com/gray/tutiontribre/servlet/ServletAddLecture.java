@@ -4,12 +4,14 @@
  */
 package com.gray.tutiontribre.servlet;
 
+import com.google.gson.Gson;
 import com.gray.tutiontribe.entity.Branch;
 import com.gray.tutiontribe.entity.Lecture;
 import com.gray.tutiontribe.entity.User;
 import com.gray.tutiontribe.information.BranchManagerRemote;
 import com.gray.tutiontribe.information.LectureManagerRemote;
 import com.gray.tutiontribe.information.UserManagerRemote;
+import com.gray.tutiontribe.models.ResponsePayload;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
@@ -45,6 +47,9 @@ public class ServletAddLecture extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            
+            Gson gson = new Gson();
+            
             User duser = (User) request.getSession().getAttribute("domain-user");
             String sTime = request.getParameter("sTime");
             String eTime = request.getParameter("eTime");
@@ -59,7 +64,7 @@ public class ServletAddLecture extends HttpServlet {
             Branch branchByName = branchManager.getBranchByName(duser, branch);
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-            
+
             Date dateSTime = sdf.parse(sTime);
             Date dateETime = sdf.parse(eTime);
 
@@ -71,12 +76,16 @@ public class ServletAddLecture extends HttpServlet {
             lecture.setPresentedUser(userByContact);
 
             Lecture saveLecture = lmr.saveLecture(duser, lecture);
+            ResponsePayload responsePayload = new ResponsePayload();
             if (saveLecture != null) {
-                response.getWriter().write("Success");
+                responsePayload.setCode(200);
+                responsePayload.setMassage("Success");
+                responsePayload.setPayload(lmr);
             } else {
-                response.getWriter().write("Error On adding user");
+                responsePayload.setCode(200);
+                responsePayload.setMassage("Error in Data Saving");
             }
-
+            response.getWriter().write(gson.toJson(responsePayload));
         } catch (ParseException ex) {
             Logger.getLogger(ServletAddLecture.class.getName()).log(Level.SEVERE, null, ex);
         }

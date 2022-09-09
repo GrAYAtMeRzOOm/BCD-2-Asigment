@@ -37,9 +37,17 @@ public class Lecture implements Serializable {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "presented_user_id", referencedColumnName = "id")
     private User presentedUser;
-    
-    @OneToMany(mappedBy = "lecture")
-    private Set<Attendance> attendances;
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "attendence_id", referencedColumnName = "id")
+    private Attendance attendances;
+
+    public Attendance getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(Attendance attendances) {
+        this.attendances = attendances;
+    }
 
     public Long getId() {
         return id;
@@ -61,19 +69,10 @@ public class Lecture implements Serializable {
         return subject;
     }
 
-    public Set<Attendance> getAttendances() {
-        return attendances;
-    }
-
-    public void setAttendances(Set<Attendance> attendances) {
-        this.attendances = attendances;
-    }
-    
     public void setSubject(String subject) {
         this.subject = subject;
     }
 
-    
     public Timestamp getEndedTime() {
         return endedTime;
     }
@@ -98,7 +97,6 @@ public class Lecture implements Serializable {
         this.presentedUser = presentedUser;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -123,5 +121,5 @@ public class Lecture implements Serializable {
     public String toString() {
         return "com.gray.tutiontribe.enitity.Lecture[ id=" + id + " ]";
     }
-    
+
 }

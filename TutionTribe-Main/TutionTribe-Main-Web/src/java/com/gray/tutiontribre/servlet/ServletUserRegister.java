@@ -12,6 +12,7 @@ import com.gray.tutiontribe.information.BranchManagerRemote;
 import com.gray.tutiontribe.information.UserManager;
 import com.gray.tutiontribe.information.UserManagerRemote;
 import com.gray.tutiontribe.information.UserRoleManagerRemote;
+import com.gray.tutiontribe.models.ResponsePayload;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,6 +52,7 @@ public class ServletUserRegister extends HttpServlet {
             throws ServletException, IOException {
         User dUser = (User) request.getSession().getAttribute("domain-user"); 
         
+        Gson gson = new Gson();
         
         System.out.println("servlet-user-register servlet post with " + request.getParameterMap().size() + " params");
         String name = request.getParameter("name");
@@ -80,11 +82,16 @@ public class ServletUserRegister extends HttpServlet {
         user.setContact(number);
 
         User saveUser = umr.saveUser(user,roleByName,branchObj);
+        ResponsePayload responsePayload = new ResponsePayload();
         if (saveUser != null) {
-            response.getWriter().write("Success");
-        } else {
-            response.getWriter().write("Error On adding user");
-        }
+                responsePayload.setCode(200);
+                responsePayload.setMassage("Success");
+                responsePayload.setPayload(saveUser);
+            } else {
+                responsePayload.setCode(200);
+                responsePayload.setMassage("Error in Data Saving");
+            }
+        response.getWriter().write(gson.toJson(responsePayload));
     }
 
     @Override

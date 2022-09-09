@@ -7,6 +7,7 @@
     <class>com.gray.tutiontribe.entity.Institute</class>
     <class>com.gray.tutiontribe.entity.Lecture</class>
     <class>com.gray.tutiontribe.entity.User</class>
+    <class>com.gray.tutiontribe.entity.UserAttendance</class>
     <class>com.gray.tutiontribe.entity.UserRole</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>

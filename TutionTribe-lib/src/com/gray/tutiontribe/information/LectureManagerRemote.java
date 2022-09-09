@@ -20,5 +20,5 @@ public interface LectureManagerRemote {
 
     Lecture getLectureById(User u,long id) throws RuntimeException;
 
-    List<Lecture> getAllLecture(User u) throws RuntimeException;    
+    List<Lecture> getAllLecture(User u) throws RuntimeException;
 }

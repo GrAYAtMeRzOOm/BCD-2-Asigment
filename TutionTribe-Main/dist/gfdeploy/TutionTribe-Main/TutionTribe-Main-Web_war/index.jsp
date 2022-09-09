@@ -10,8 +10,10 @@
 <%@page import="javax.ejb.EJB"%>
 <%
 
-    UserRoleManagerRemote urmr = (UserRoleManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.UserRoleManagerRemote");
-
+    if (session.getAttribute("domain-user") == null) {
+        response.sendRedirect("/TutionTribe-Main-Web/Client-backend/User-login/");
+    } else {
+        UserRoleManagerRemote urmr = (UserRoleManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.UserRoleManagerRemote");
 
 %>
 
@@ -82,10 +84,7 @@
                     <div class="form-group">
                         <label for="exampleSelectGender">User Role</label>
                         <select class="form-control" name="userRole" id="exampleSelectGender">
-                            <%                                for (UserRole ur : urmr.getAllUserRoles()) {
-                            %><option><%= ur.getRoleName()%></option><%
-                                }
-                            %>
+                            
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary me-2"> Save user </button>
@@ -94,4 +93,6 @@
         </div>
     </body>
 </html>
-
+<%
+    }
+%>

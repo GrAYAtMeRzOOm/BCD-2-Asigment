@@ -9,12 +9,14 @@ import java.sql.Date;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -42,15 +44,15 @@ public class User implements Serializable {
     @JoinColumn(name = "user_role_id", referencedColumnName = "id")
     private UserRole userRole;
     
-    @ManyToMany
-    private Set<Attendance> attendance;
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private Set<UserAttendance> userAttendances;
 
-    public Set<Attendance> getAttendance() {
-        return attendance;
+    public Set<UserAttendance> getUserAttendances() {
+        return userAttendances;
     }
 
-    public void setAttendance(Set<Attendance> attendance) {
-        this.attendance = attendance;
+    public void setUserAttendances(Set<UserAttendance> userAttendances) {
+        this.userAttendances = userAttendances;
     }
 
     public UserRole getUserRole() {
