@@ -28,7 +28,6 @@ public class ServletLogout extends HttpServlet {
         session.removeAttribute("domain-user");
         session.invalidate();
         request.logout();
-//        response.sendRedirect("/TutionTribe-Main-Web/Client-backend/User-login");
         System.out.println("Logged Out");
     }
 

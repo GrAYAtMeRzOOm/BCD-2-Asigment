@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  *
  * @author grays
@@ -23,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ServletUserLogin", urlPatterns = {"/servlet-user-login"})
 public class ServletUserLogin extends HttpServlet {
 
-   
     @EJB
     UserManagerRemote umr;
 
@@ -40,10 +38,15 @@ public class ServletUserLogin extends HttpServlet {
         String pw = request.getParameter("password");
         try {
             User userLogin = umr.userLogin(email, pw);
-            if(userLogin!=null){
-                request.getSession().setAttribute("domain-user", userLogin);
-                response.sendRedirect("/TutionTribe-Main-Web/Client-backend/");
-            }else{
+            if (userLogin != null) {
+                if (userLogin.getUserRole().getRoleName().equals("Admin") || userLogin.getUserRole().getRoleName().equals("Owner")) {
+                    request.getSession().setAttribute("domain-user", userLogin);
+                    response.sendRedirect("/TutionTribe-Main-Web/Client-backend/");
+                }else{
+                    request.getSession().setAttribute("domain-user", userLogin);
+                    response.sendRedirect("/TutionTribe-Main-Web/Client-backend/student_index.jsp");
+                }
+            } else {
                 response.sendRedirect("/TutionTribe-Main-Web/Client-backend/User-login");
             }
         } catch (IOException | RuntimeException e) {

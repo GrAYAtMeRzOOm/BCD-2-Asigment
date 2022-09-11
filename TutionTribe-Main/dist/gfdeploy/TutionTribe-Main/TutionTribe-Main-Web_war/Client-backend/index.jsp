@@ -19,19 +19,20 @@
     if (session.getAttribute("domain-user") == null) {
         response.sendRedirect("/TutionTribe-Main-Web/Client-backend/User-login/");
     } else {
-        UserRoleManagerRemote urmr = (UserRoleManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.UserRoleManagerRemote");
-        UserManagerRemote um = (UserManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.UserManagerRemote");
-        BranchManagerRemote bmr = (BranchManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.BranchManagerRemote");
-        LectureManagerRemote lmr = (LectureManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.LectureManagerRemote");
-        UserAttendanceManagerRemote uamr = (UserAttendanceManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.attendance.UserAttendanceManagerRemote");
         User domainUser = (User) session.getAttribute("domain-user");
-        List<User> staff = um.getAllUsersByRole("Staff");
-        List<User> students = um.getAllUsersByRole("Student");
-        List<User> admins = um.getAllUsersByRole("Admin");
-        List<Branch> branchs = bmr.getAllbranches(domainUser);
-        List<UserRole> userRoles = urmr.getAllUserRoles(domainUser);
-        List<Lecture> lectures = lmr.getAllLecture(domainUser);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        if (!domainUser.getUserRole().getRoleName().equals("Student")) {
+            UserRoleManagerRemote urmr = (UserRoleManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.UserRoleManagerRemote");
+            UserManagerRemote um = (UserManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.UserManagerRemote");
+            BranchManagerRemote bmr = (BranchManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.BranchManagerRemote");
+            LectureManagerRemote lmr = (LectureManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.LectureManagerRemote");
+//            UserAttendanceManagerRemote uamr = (UserAttendanceManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.attendance.UserAttendanceManagerRemote");
+            List<User> staff = um.getAllUsersByRole("Staff");
+            List<User> students = um.getAllUsersByRole("Student");
+            List<User> admins = um.getAllUsersByRole("Admin");
+            List<Branch> branchs = bmr.getAllbranches(domainUser);
+            List<UserRole> userRoles = urmr.getAllUserRoles(domainUser);
+            List<Lecture> lectures = lmr.getAllLecture(domainUser);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
 
 
 %>
@@ -131,7 +132,6 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <a class="text-black font-13 d-block pt-2 pb-2 pb-lg-0 font-weight-bold ps-4" href="#">Show more</a>
                                     </div>
                                 </div>
                             </div>
@@ -295,7 +295,7 @@
         <script src="assets/js/tableHTMLExport.js"></script>
         <!-- End custom js for this page -->
         <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-        
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.min.js"></script>
         <script>
@@ -339,6 +339,7 @@
                                                             alert("Success");
                                                             window.location.replace("/TutionTribe-Main-Web/Client-backend/User-login");
                                                         }, error: function (jqXHR, textStatus, errorThrown) {
+                                                            window.location.replace("/TutionTribe-Main-Web/Client-backend/User-login");
                                                             alert("Error");
                                                         }
                                                     });
@@ -391,4 +392,7 @@
     </body>
 </html>
 <%
+        } else {
+            response.sendRedirect("/TutionTribe-Main-Web/Client-backend/student_index.jsp");
+        }
     }%>

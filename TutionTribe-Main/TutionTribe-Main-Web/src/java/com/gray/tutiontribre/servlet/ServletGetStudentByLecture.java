@@ -43,7 +43,8 @@ public class ServletGetStudentByLecture extends HttpServlet {
             throws ServletException, IOException {
         Gson gson = new Gson();
         String lid = request.getParameter("lectureId");
-        if (lid != null) {
+        String uid = request.getParameter("studentId");
+        if (lid != null && uid == null) {
             User dUser = (User) request.getSession().getAttribute("domain-user");
             Lecture lectureById = remote.getLectureById(dUser, Long.valueOf(lid));
             List<UserAttendance> list = attendanceManagerRemote.getuserAttendancebyLectureId(Long.valueOf(lid));
@@ -55,6 +56,22 @@ public class ServletGetStudentByLecture extends HttpServlet {
                 userPayload.setStatus(attendance.getStatus());
                 userPayload.setSubject(lectureById.getSubject());
                 userPayload.setName(attendance.getUser().getName());
+                userPayload.setEmail(attendance.getUser().getEmail());
+                payloads.add(userPayload);
+            }
+            response.getWriter().print(gson.toJson(payloads));
+        } else if (lid != null && uid != null) {
+            User dUser = (User) request.getSession().getAttribute("domain-user");
+            Lecture lectureById = remote.getLectureById(dUser, Long.valueOf(lid));
+            List<UserAttendance> list = attendanceManagerRemote.getuserAttendancebyLectureIdAndUserId(Long.valueOf(lid), Long.valueOf(uid));
+            List<UserPayload> payloads = new ArrayList<>();
+            for (UserAttendance attendance : list) {
+                UserPayload userPayload = new UserPayload();
+                userPayload.setBranch(attendance.getUser().getBranch().getName());
+                userPayload.setId(attendance.getUser().getId());
+                userPayload.setStatus(attendance.getStatus());
+                userPayload.setSubject(lectureById.getSubject());
+                userPayload.setName(attendance.getAttendance().getLecturer().getName());
                 userPayload.setEmail(attendance.getUser().getEmail());
                 payloads.add(userPayload);
             }

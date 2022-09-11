@@ -4,7 +4,6 @@
  */
 package com.gray.tutiontribe.attendance;
 
-import com.gray.tutiontribe.entity.Attendance;
 import com.gray.tutiontribe.entity.Lecture;
 import com.gray.tutiontribe.entity.User;
 import com.gray.tutiontribe.entity.UserAttendance;
@@ -28,4 +27,8 @@ public interface UserAttendanceManagerRemote {
     List<UserAttendance> getAllUserAttendance(User user) throws RuntimeException;
 
     List<UserAttendance> getuserAttendancebyLectureId(long lid) throws RuntimeErrorException;
+
+    List<UserAttendance> getuserAttendancebyLectureIdAndUserId(long lId, long uId) throws RuntimeException;
+
+    List<UserAttendance> getuserAttendancebyUserId(long uid) throws RuntimeException;
 }

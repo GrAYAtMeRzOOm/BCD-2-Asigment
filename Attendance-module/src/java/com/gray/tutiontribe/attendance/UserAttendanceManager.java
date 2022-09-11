@@ -118,4 +118,36 @@ public class UserAttendanceManager implements UserAttendanceManagerRemote {
         }
     }
 
+    @Override
+    public List<UserAttendance> getuserAttendancebyLectureIdAndUserId(long lId, long uId) throws RuntimeException {
+        if (lId > 0 && uId > 0) {
+            Query query = em.createQuery("SELECT u FROM UserAttendance u WHERE u.attendance.lecture.id=:lid AND u.user.id=:Uid");
+            query.setParameter("lid", lId).setParameter("Uid", uId);
+            List resultList = query.getResultList();
+            List<UserAttendance> attendances = new ArrayList<>();
+            for (Object object : resultList) {
+                attendances.add((UserAttendance) object);
+            }
+            return attendances;
+        } else {
+            throw new DataNotFoundException("lecture id is null");
+        }
+    }
+
+    @Override
+    public List<UserAttendance> getuserAttendancebyUserId(long uid) throws RuntimeException {
+        if (uid > 0) {
+            Query query = em.createQuery("SELECT u FROM UserAttendance u WHERE u.user.id=:uid");
+            query.setParameter("uid", uid);
+            List resultList = query.getResultList();
+            List<UserAttendance> attendances = new ArrayList<>();
+            for (Object object : resultList) {
+                attendances.add((UserAttendance) object);
+            }
+            return attendances;
+        } else {
+            throw new DataNotFoundException("user id is null");
+        }
+    }
+
 }

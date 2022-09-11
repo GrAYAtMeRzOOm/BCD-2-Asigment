@@ -87,6 +87,25 @@
                             </div>
                         </div>
                         <!-- first row starts here -->
+                        <div class="row">
+                            <div class="col-sm-12 stretch-card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Add Branch</h4>
+                                    <p class="card-description">Register Branch</p>
+                                    <form class="forms-sample" id="bRegi" onsubmit="return false">
+                                        <div class="form-group">
+                                            <label for="subject">Branch name</label>
+                                            <input type="text" class="form-control" name="bname" id="bname" placeholder="Branch name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sTime">Branch city</label>
+                                            <input type="text" class="form-control" name="bcity" id="bcity" placeholder=" city">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary me-2"> Save user </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                         <!-- doughnut chart row starts -->
                         <div class="row">
                             <div class="col-sm-12 stretch-card">
@@ -225,7 +244,7 @@
                                                     <%
                                                         for (Lecture lecture : lectures) {
                                                     %>
-                                                    <tr>
+                                                    <tr onclick="loadTableAttend(<%=lecture.getId()%>)">
                                                         <td><%= lecture.getId()%></td>
                                                         <td><%= lecture.getSubject()%></td>
                                                         <td><%= lecture.getStartedTime()%></td>
@@ -250,14 +269,14 @@
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                        <th>User</th>
-                                                        <th>Product</th>
+                                                        <th>UserName</th>
+                                                        <th>Status</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="tbUsers">
                                                     <tr>
                                                         <td>Jacob</td>
-                                                        <td>Photoshop</td>
+                                                        <td>UnMarked</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -302,72 +321,114 @@
         <!-- End custom js for this page -->
         <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
         <script>
-                                            document.onload = function () {
-                                                $("#lb_userId").val("<%= domainUser.getName()%>");
-                                            };
-                                            $("#userRegi").submit(function (event) {
-                                                var formData = {
-                                                    subject: $("#subject").val(),
-                                                    eTime: $("#eTime").val(),
-                                                    sTime: $("#sTime").val(),
-                                                    branch: $("#userBranch").val(),
-                                                    user: $("#user").val()
-                                                };
-                                                $.ajax({
-                                                    url: "/TutionTribe-Main-Web/servlet-add-lecture",
-                                                    dataType: 'json',
-                                                    data: formData,
-                                                    type: 'POST',
-                                                    success: function (xhr) {
-                                                        alert("User entered Successful");
-                                                    },
-                                                    error: function (data) {
-                                                        alert("User Failed");
-                                                        console.log(data);
-                                                    }});
-                                                event.preventDefault();
-                                            });
+                                                        document.onload = function () {
+                                                            $("#lb_userId").val("<%= domainUser.getName()%>");
+                                                        };
+                                                        $("#userRegi").submit(function (event) {
+                                                            var formData = {
+                                                                subject: $("#subject").val(),
+                                                                eTime: $("#eTime").val(),
+                                                                sTime: $("#sTime").val(),
+                                                                branch: $("#userBranch").val(),
+                                                                user: $("#user").val()
+                                                            };
+                                                            $.ajax({
+                                                                url: "/TutionTribe-Main-Web/servlet-add-lecture",
+                                                                dataType: 'json',
+                                                                data: formData,
+                                                                type: 'POST',
+                                                                success: function (xhr) {
+                                                                    alert("User entered Successful");
+                                                                },
+                                                                error: function (data) {
+                                                                    alert("User Failed");
+                                                                    console.log(data);
+                                                                }});
+                                                            event.preventDefault();
+                                                        });
 
-                                            $("#setLecture").submit(function (event) {
-                                                var formData = {
-                                                    student: $("#slist").val(),
-                                                    lecture: $("#leclist").val()
-                                                };
-                                                $.ajax({
-                                                    url: "/TutionTribe-Main-Web/servlet-add-student-to-lecture",
-                                                    dataType: 'json',
-                                                    data: formData,
-                                                    type: 'POST',
-                                                    success: function (xhr) {
-                                                        alert("Success");
-                                                    },
-                                                    error: function (data) {
-                                                        alert("Error");
-                                                        console.log(data);
-                                                    }});
-                                                event.preventDefault();
-                                            });
+                                                        $("#bRegi").submit(function (event) {
+                                                            var formData = {
+                                                                bname: $("#bname").val(),
+                                                                bcity: $("#bcity").val()
 
-                                            $("#setAttend").submit(function (event) {
-                                                var formData = {
-                                                    student: $("#attendanceslist").val(),
-                                                    lecture: $("#attendanceLectureList").val(),
-                                                    status: $("#attendanceStatus").val()
-                                                };
-                                                $.ajax({
-                                                    url: "/TutionTribe-Main-Web/servlet-mark-student-attendance",
-                                                    dataType: 'json',
-                                                    data: formData,
-                                                    type: 'POST',
-                                                    success: function (xhr) {
-                                                        alert("Success");
-                                                    },
-                                                    error: function (data) {
-                                                        alert("Error");
-                                                        console.log(data);
-                                                    }});
-                                                event.preventDefault();
-                                            });
+                                                            };
+                                                            $.ajax({
+                                                                url: "/TutionTribe-Main-Web/servlet-branch-register",
+                                                                dataType: 'json',
+                                                                data: formData,
+                                                                type: 'POST',
+                                                                success: function (xhr) {
+                                                                    alert("Branch entered Successful");
+                                                                },
+                                                                error: function (data) {
+                                                                    alert("Branch Failed");
+                                                                    console.log(data);
+                                                                }});
+                                                            event.preventDefault();
+                                                        });
+
+                                                        $("#setLecture").submit(function (event) {
+                                                            var formData = {
+                                                                student: $("#slist").val(),
+                                                                lecture: $("#leclist").val()
+                                                            };
+                                                            $.ajax({
+                                                                url: "/TutionTribe-Main-Web/servlet-add-student-to-lecture",
+                                                                dataType: 'json',
+                                                                data: formData,
+                                                                type: 'POST',
+                                                                success: function (xhr) {
+                                                                    alert("Success");
+                                                                },
+                                                                error: function (data) {
+                                                                    alert("Error");
+                                                                    console.log(data);
+                                                                }});
+                                                            event.preventDefault();
+                                                        });
+
+                                                        $("#setAttend").submit(function (event) {
+                                                            var formData = {
+                                                                student: $("#attendanceslist").val(),
+                                                                lecture: $("#attendanceLectureList").val(),
+                                                                status: $("#attendanceStatus").val()
+                                                            };
+                                                            $.ajax({
+                                                                url: "/TutionTribe-Main-Web/servlet-mark-student-attendance",
+                                                                dataType: 'json',
+                                                                data: formData,
+                                                                type: 'POST',
+                                                                success: function (xhr) {
+                                                                    alert("Success");
+                                                                },
+                                                                error: function (data) {
+                                                                    alert("Error");
+                                                                    console.log(data);
+                                                                }});
+                                                            event.preventDefault();
+                                                        });
+                                                        function loadTableAttend(id) {
+                                                            $.ajax({
+                                                                url: "/TutionTribe-Main-Web/servlet-get-student-by-lecture",
+                                                                data: {
+                                                                    lectureId: id
+                                                                },
+                                                                dataType: 'json',
+                                                                success: function (data) {
+                                                                    let val;
+                                                                    $.each(data, function (key, value) {
+                                                                        val += '<tr ><td>' + value.name + '</td>';
+                                                                        if (value.status === undefined) {
+                                                                            val += '<td> UnMarked </td></tr>';
+                                                                        } else {
+                                                                            val += '<td>' + value.status + ' </td></tr>';
+                                                                        }
+                                                                    });
+                                                                    $('#tbUsers').html(val);
+                                                                }
+                                                            });
+                                                        }
 
         </script>
     </body>
