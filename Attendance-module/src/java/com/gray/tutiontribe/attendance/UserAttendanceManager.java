@@ -8,14 +8,23 @@ import com.gray.tutiontribe.entity.Attendance;
 import com.gray.tutiontribe.entity.Lecture;
 import com.gray.tutiontribe.entity.User;
 import com.gray.tutiontribe.entity.UserAttendance;
+import com.gray.tutiontribe.entity.UserRole;
 import com.gray.tutiontribe.exception.DataDuplicationException;
 import com.gray.tutiontribe.exception.DataNotFoundException;
+import com.gray.tutiontribe.interceptor.LogInterceptor;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import javax.management.RuntimeErrorException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -80,6 +89,33 @@ public class UserAttendanceManager implements UserAttendanceManagerRemote {
             throw new DataNotFoundException("Cannot Find userAttendance object is null");
         }
     }
-    
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    @Interceptors({LogInterceptor.class})
+    @Override
+    public List<UserAttendance> getAllUserAttendance(User user) throws RuntimeException {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<UserAttendance> query = builder.createQuery(UserAttendance.class);
+        Root<UserAttendance> root = query.from(UserAttendance.class);
+        query.select(root);
+        List<UserAttendance> resultList = em.createQuery(query).getResultList();
+        return resultList;
+    }
+
+    @Override
+    public List<UserAttendance> getuserAttendancebyLectureId(long lid) throws RuntimeErrorException {
+        if (lid > 0) {
+            Query query = em.createQuery("SELECT u FROM UserAttendance u WHERE u.attendance.lecture.id=:id");
+            query.setParameter("id", lid);
+            List resultList = query.getResultList();
+            List<UserAttendance> attendances = new ArrayList<>();
+            for (Object object : resultList) {
+                attendances.add((UserAttendance) object);
+            }
+            return attendances;
+        } else {
+            throw new DataNotFoundException("lecture id is null");
+        }
+    }
 
 }

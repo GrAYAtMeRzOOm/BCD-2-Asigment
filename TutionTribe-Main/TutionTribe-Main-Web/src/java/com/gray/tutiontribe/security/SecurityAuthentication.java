@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author grays
  */
-@ApplicationScoped
+//@ApplicationScoped
 public class SecurityAuthentication implements HttpAuthenticationMechanism {
 
     @Override

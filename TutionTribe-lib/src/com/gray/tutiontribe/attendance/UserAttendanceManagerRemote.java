@@ -24,4 +24,8 @@ public interface UserAttendanceManagerRemote {
     void setUserToLecture(User user, Lecture lecture) throws RuntimeException;
 
     Boolean markUserAttendance(User student, Lecture lecture, String status) throws RuntimeException;    
+
+    List<UserAttendance> getAllUserAttendance(User user) throws RuntimeException;
+
+    List<UserAttendance> getuserAttendancebyLectureId(long lid) throws RuntimeErrorException;
 }

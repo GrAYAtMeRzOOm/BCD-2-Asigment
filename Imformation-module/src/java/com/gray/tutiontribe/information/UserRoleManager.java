@@ -24,7 +24,6 @@ import javax.persistence.criteria.Root;
  *
  * @author grays
  */
-
 @Stateless
 public class UserRoleManager implements UserRoleManagerRemote {
 
@@ -55,11 +54,12 @@ public class UserRoleManager implements UserRoleManagerRemote {
         }
         return resultList;
     }
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Interceptors({LogInterceptor.class})
     @Override
-    public UserRole getRoleByName(User u,String name) throws RuntimeException {
-        
+    public UserRole getRoleByName(User u, String name) throws RuntimeException {
+
         if (!name.equals("")) {
             Query query = em.createQuery("SELECT u FROM UserRole u WHERE u.roleName =:name");
             query.setParameter("name", name);
@@ -69,7 +69,5 @@ public class UserRoleManager implements UserRoleManagerRemote {
             throw new DataNotFoundException("cannot find data with contact " + name);
         }
     }
-    
-    
-    
+
 }

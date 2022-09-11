@@ -19,13 +19,13 @@
       <span class="nav-item-head">Pages</span>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="dashboard.jsp">
+      <a class="nav-link" href="index.jsp">
         <i class="mdi mdi-compass-outline menu-icon"></i>
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="register.jsp">
+      <a class="nav-link" href="usermanager.jsp">
         <i class="mdi mdi-account-card-details menu-icon"></i>
         <span class="menu-title">User Management</span>
         <i class="menu-arrow"></i>

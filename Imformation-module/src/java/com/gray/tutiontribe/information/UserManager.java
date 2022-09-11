@@ -114,7 +114,6 @@ public class UserManager implements UserManagerRemote {
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
     public List<User> getAllUsersByRole(String role) throws RuntimeException {
-        em.getTransaction().commit();
         if (!role.equals("")) {
             Query query = em.createQuery("SELECT u FROM User u WHERE u.userRole.roleName =:role");
             query.setParameter("role", role);

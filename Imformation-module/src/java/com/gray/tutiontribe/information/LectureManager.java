@@ -56,7 +56,6 @@ public class LectureManager implements LectureManagerRemote {
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
     public Lecture getLectureById(User u, long id) throws RuntimeException {
-
         if (id > 0) {
             Query query = em.createQuery("SELECT l FROM Lecture l WHERE l.id=:id");
             query.setParameter("id", id);

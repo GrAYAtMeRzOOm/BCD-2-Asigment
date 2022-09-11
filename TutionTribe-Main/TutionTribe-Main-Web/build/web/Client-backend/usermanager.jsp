@@ -223,6 +223,9 @@
         <!-- End custom js for this page -->
         <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
         <script>
+                                         document.onload = function () {
+                                            $("#lb_userId").val("<%= domainUser.getName()%>");
+                                        };
                                         $("#userRegi").submit(function (event) {
                                             var formData = {
                                                 name: $("#userName").val(),

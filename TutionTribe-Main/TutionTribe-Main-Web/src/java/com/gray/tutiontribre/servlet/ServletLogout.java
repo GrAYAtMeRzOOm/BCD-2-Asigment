@@ -24,12 +24,12 @@ public class ServletLogout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         HttpSession session = request.getSession();
         session.removeAttribute("domain-user");
         session.invalidate();
         request.logout();
-        response.sendRedirect("/TutionTribe-Main-Web/Client-backend/User-login");
+//        response.sendRedirect("/TutionTribe-Main-Web/Client-backend/User-login");
+        System.out.println("Logged Out");
     }
 
     @Override

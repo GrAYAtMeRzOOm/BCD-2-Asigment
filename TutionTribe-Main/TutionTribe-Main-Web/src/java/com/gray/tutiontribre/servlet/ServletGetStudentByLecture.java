@@ -4,11 +4,16 @@
  */
 package com.gray.tutiontribre.servlet;
 
+import com.google.gson.Gson;
+import com.gray.tutiontribe.attendance.UserAttendanceManagerRemote;
 import com.gray.tutiontribe.entity.Lecture;
 import com.gray.tutiontribe.entity.User;
 import com.gray.tutiontribe.entity.UserAttendance;
 import com.gray.tutiontribe.information.LectureManagerRemote;
+import com.gray.tutiontribe.models.UserPayload;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -24,20 +29,39 @@ import javax.servlet.http.HttpServletResponse;
  * @author grays
  */
 @WebServlet(name = "ServletGetStudentByLecture", urlPatterns = {"/servlet-get-student-by-lecture"})
-@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"Owner","Admin"}))
+//@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"Owner", "Admin"}))
 public class ServletGetStudentByLecture extends HttpServlet {
 
     @EJB
     LectureManagerRemote remote;
 
+    @EJB
+    UserAttendanceManagerRemote attendanceManagerRemote;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String lid = request.getParameter("lid");
-        User dUser = (User) request.getSession().getAttribute("domain-user");
-        Lecture lectureById = remote.getLectureById(dUser, Long.valueOf(lid));
-        Set<UserAttendance> userAttendances = lectureById.getAttendances().getUserAttendances();
-        
+        Gson gson = new Gson();
+        String lid = request.getParameter("lectureId");
+        if (lid != null) {
+            User dUser = (User) request.getSession().getAttribute("domain-user");
+            Lecture lectureById = remote.getLectureById(dUser, Long.valueOf(lid));
+            List<UserAttendance> list = attendanceManagerRemote.getuserAttendancebyLectureId(Long.valueOf(lid));
+            List<UserPayload> payloads = new ArrayList<>();
+            for (UserAttendance attendance : list) {
+                UserPayload userPayload = new UserPayload();
+                userPayload.setBranch(attendance.getUser().getBranch().getName());
+                userPayload.setId(attendance.getUser().getId());
+                userPayload.setStatus(attendance.getStatus());
+                userPayload.setSubject(lectureById.getSubject());
+                userPayload.setName(attendance.getUser().getName());
+                userPayload.setEmail(attendance.getUser().getEmail());
+                payloads.add(userPayload);
+            }
+            response.getWriter().print(gson.toJson(payloads));
+        } else {
+            response.sendError(404);
+        }
     }
 
     @Override

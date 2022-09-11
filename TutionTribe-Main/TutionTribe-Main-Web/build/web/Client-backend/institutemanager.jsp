@@ -23,12 +23,13 @@
         response.sendRedirect("/TutionTribe-Main-Web/Client-backend/User-login/");
     } else {
         UserRoleManagerRemote umr = (UserRoleManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.UserRoleManagerRemote");
+        UserManagerRemote um = (UserManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.UserManagerRemote");
         BranchManagerRemote bmr = (BranchManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.BranchManagerRemote");
         LectureManagerRemote lmr = (LectureManagerRemote) new InitialContext().lookup("com.gray.tutiontribe.information.LectureManagerRemote");
         User domainUser = (User) session.getAttribute("domain-user");
         List<Branch> branchs = bmr.getAllbranches(domainUser);
-        Set<User> userRoles = umr.getRoleByName(domainUser, "Staff").getRoleUsers();
-        Set<User> students = umr.getRoleByName(domainUser, "Student").getRoleUsers();
+        List<User> staff = um.getAllUsersByRole("Staff");
+        List<User> students = um.getAllUsersByRole("Student");
         List<Lecture> lectures = lmr.getAllLecture(domainUser);
 
 %>
@@ -121,7 +122,7 @@
                                             <label for="user">Set Presenting lecturer</label>
                                             <select class="form-control" name="user" id="user">
                                                 <%
-                                                    for (User u : userRoles) {
+                                                    for (User u : staff) {
                                                 %><option><%= u.getContact() + "-" + u.getName()%></option><%
                                                     }
                                                 %>
@@ -301,6 +302,9 @@
         <!-- End custom js for this page -->
         <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
         <script>
+                                            document.onload = function () {
+                                                $("#lb_userId").val("<%= domainUser.getName()%>");
+                                            };
                                             $("#userRegi").submit(function (event) {
                                                 var formData = {
                                                     subject: $("#subject").val(),
@@ -315,13 +319,10 @@
                                                     data: formData,
                                                     type: 'POST',
                                                     success: function (xhr) {
-                                                        if (xhr.status === 200) {
-                                                            alert("User entered Successful");
-                                                        } else {
-                                                            alert("Error In Data Insertion");
-                                                        }
+                                                        alert("User entered Successful");
                                                     },
                                                     error: function (data) {
+                                                        alert("User Failed");
                                                         console.log(data);
                                                     }});
                                                 event.preventDefault();
@@ -346,6 +347,7 @@
                                                     }});
                                                 event.preventDefault();
                                             });
+
                                             $("#setAttend").submit(function (event) {
                                                 var formData = {
                                                     student: $("#attendanceslist").val(),

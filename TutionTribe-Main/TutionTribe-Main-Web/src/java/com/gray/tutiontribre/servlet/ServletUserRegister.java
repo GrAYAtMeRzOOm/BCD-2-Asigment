@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author grays
  */
 @WebServlet(name = "ServletUserRegister", urlPatterns = {"/servlet-user-register"})
-@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"Owner","Admin"}))
+//@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"Owner","Admin"}))
 public class ServletUserRegister extends HttpServlet {
 
     @EJB
