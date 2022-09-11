@@ -10,6 +10,7 @@ import com.gray.tutiontribe.entity.User;
 import com.gray.tutiontribe.entity.UserAttendance;
 import com.gray.tutiontribe.exception.DataDuplicationException;
 import com.gray.tutiontribe.exception.DataNotFoundException;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.management.RuntimeErrorException;
 import javax.persistence.EntityManager;
@@ -44,20 +45,41 @@ public class UserAttendanceManager implements UserAttendanceManagerRemote {
 
     @Override
     public void setUserToLecture(User user, Lecture lecture) throws RuntimeException {
-        if (user != null || lecture != null) {
-
-            Attendance attendance = new Attendance();
-            attendance.setLecture(lecture);
-
-            UserAttendance userAttendance = new UserAttendance();
-            userAttendance.setUser(user);
-            userAttendance.setAttendance(attendance);
-
-            em.persist(userAttendance);
-
+        if (user != null && lecture != null) {
+            Query query = em.createQuery("SELECT a FROM Attendance a WHERE a.lecture.id=:lId").setParameter("lId", lecture.getId());
+            if (!query.getResultList().isEmpty()) {
+                Attendance a = (Attendance) query.getSingleResult();
+                UserAttendance userAttendance = new UserAttendance();
+                userAttendance.setAttendance(a);
+                userAttendance.setUser(user);
+                em.persist(userAttendance);
+            } else {
+                throw new DataNotFoundException("Cannot Find userAttendance object is null");
+            }
         } else {
             throw new DataNotFoundException("Cannot Find userAttendance object is null");
         }
     }
+
+    @Override
+    public Boolean markUserAttendance(User student, Lecture lecture, String status) throws RuntimeException {
+        if (student != null && lecture != null) {
+            Query query = em.createQuery("SELECT u FROM UserAttendance u WHERE u.user.id=:uId AND u.attendance.lecture.id=:lId");
+            query.setParameter("uId", student.getId()).setParameter("lId", lecture.getId());
+            List resultList = query.getResultList();
+            if (!resultList.isEmpty()) {
+                UserAttendance userAttendance = (UserAttendance) resultList.get(0);
+                userAttendance.setUser(student);
+                userAttendance.setStatus(status);
+                em.merge(userAttendance);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            throw new DataNotFoundException("Cannot Find userAttendance object is null");
+        }
+    }
+    
 
 }

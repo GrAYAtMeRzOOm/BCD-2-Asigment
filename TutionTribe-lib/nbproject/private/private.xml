@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-lib/src/com/gray/tutiontribe/entity/Branch.java</file>
             <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-lib/src/com/gray/tutiontribe/entity/UserRole.java</file>
             <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-lib/src/com/gray/tutiontribe/information/UserManagerRemote.java</file>
-            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-lib/src/com/gray/tutiontribe/entity/User.java</file>
-            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-lib/src/com/gray/tutiontribe/interceptor/LogInterceptor.java</file>
+            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-lib/src/com/gray/tutiontribe/attendance/UserAttendanceManagerRemote.java</file>
+            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-lib/src/com/gray/tutiontribe/entity/Attendance.java</file>
+            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-lib/src/com/gray/tutiontribe/entity/Lecture.java</file>
+            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-lib/src/com/gray/tutiontribe/entity/UserAttendance.java</file>
         </group>
     </open-files>
 </project-private>

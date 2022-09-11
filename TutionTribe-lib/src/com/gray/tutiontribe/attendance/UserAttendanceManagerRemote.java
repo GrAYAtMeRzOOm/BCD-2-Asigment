@@ -8,6 +8,7 @@ import com.gray.tutiontribe.entity.Attendance;
 import com.gray.tutiontribe.entity.Lecture;
 import com.gray.tutiontribe.entity.User;
 import com.gray.tutiontribe.entity.UserAttendance;
+import java.util.List;
 import javax.ejb.Remote;
 import javax.management.RuntimeErrorException;
 
@@ -21,5 +22,6 @@ public interface UserAttendanceManagerRemote {
     UserAttendance saveUserAttendance(UserAttendance userAttendance) throws RuntimeErrorException;
 
     void setUserToLecture(User user, Lecture lecture) throws RuntimeException;
-    
+
+    Boolean markUserAttendance(User student, Lecture lecture, String status) throws RuntimeException;    
 }

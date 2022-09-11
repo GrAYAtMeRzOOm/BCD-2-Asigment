@@ -19,6 +19,7 @@
 
 
 %>
+<c:set var="username" value="<%= domainUser.getName()%>" scope="page"/>
 <html lang="en">
     <head>
         <!-- Required meta tags -->
@@ -43,7 +44,7 @@
     <body>
         <div class="container-scroller">
             <!-- partial:partials/_sidebar.html -->
-            <jsp:include page="partials/_sidebar.html"/>
+            <jsp:include page="partials/_sidebar.jsp"/>
             <!-- partial -->
             <div class="container-fluid page-body-wrapper">
                 <!-- partial:partials/_settings-panel.html -->
@@ -75,112 +76,307 @@
                         <!-- first row starts here -->
                         <!-- doughnut chart row starts -->
                         <div class="row">
-                            <div class="col-sm-12 stretch-card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Register User</h4>
-                                    <p class="card-description">Register all your admins and students here</p>
-                                    <form class="forms-sample" id="userRegi" onsubmit="return false">
-                                        <div class="form-group">
-                                            <label for="exampleInputName1">Name</label>
-                                            <input type="text" class="form-control" name="name" id="userName" placeholder="Name">
+                            <div class="col-xl-12 stretch-card grid-margin">
+                                <div class="card">
+                                    <div class="card-body pb-0">
+                                        <h4 class="card-title mb-0">Student management review</h4>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table custom-table text-dark">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Sale Rate</th>
+                                                        <th>Actual</th>
+                                                        <th>Variance</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="../assets/images/faces/face2.jpg" class="me-2" alt="image" /> Jacob Jensen 
+                                                        </td> 
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <span class="pe-2 d-flex align-items-center">85%</span>
+                                                                <select id="star-1" name="rating" autocomplete="off">
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>32,435</td>
+                                                        <td>40,234</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="../assets/images/faces/face3.jpg" class="me-2" alt="image" /> Cecelia Bradley 
+                                                        </td> 
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <span class="pe-2 d-flex align-items-center">55%</span>
+                                                                <select id="star-2" name="rating" autocomplete="off">
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>4,36780</td>
+                                                        <td>765728</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="../assets/images/faces/face4.jpg" class="me-2" alt="image" /> Leah Sherman 
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <span class="pe-2 d-flex align-items-center">23%</span>
+                                                                <select id="star-3" name="rating" autocomplete="off">
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>2300</td>
+                                                        <td>22437</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="../assets/images/faces/face5.jpg" class="me-2" alt="image" /> Ina Curry 
+                                                        </td> 
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <span class="pe-2 d-flex align-items-center">44%</span>
+                                                                <select id="star-4" name="rating" autocomplete="off">
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>53462</td>
+                                                        <td>1,75938</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="../assets/images/faces/face7.jpg" class="me-2" alt="image" /> Lida Fitzgerald 
+                                                        </td> 
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <span class="pe-2 d-flex align-items-center">65%</span>
+                                                                <select id="star-5" name="rating" autocomplete="off">
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>67453</td>
+                                                        <td>765377</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="../assets/images/faces/face2.jpg" class="me-2" alt="image" /> Stella Johnson 
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <span class="pe-2 d-flex align-items-center">49%</span>
+                                                                <select id="star-6" name="rating" autocomplete="off">
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>43662</td>
+                                                        <td>96535</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="../assets/images/faces/face9.jpg" class="me-2" alt="image" /> Maria Ortiz 
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <span class="pe-2 d-flex align-items-center">65%</span>
+                                                                <select id="star-7" name="rating" autocomplete="off">
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>76555</td>
+                                                        <td>258546</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputName1">Contact number</label>
-                                            <input type="text" class="form-control" name="number" id="userNumber" placeholder="Contact number">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail3">Email address</label>
-                                            <input type="email" class="form-control" name="email" id="userEmail" placeholder="Email">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword4">Password</label>
-                                            <input type="password" class="form-control" name="password" id="userPassword" placeholder="Password">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputDob">Age</label>
-                                            <input type="range" class="form-control" name="age" id="userAge" placeholder="18">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleSelectGender">Gender</label>
-                                            <select class="form-control" name="gender" id="userGender">
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleTextarea1">Address</label>
-                                            <textarea class="form-control" name="address" id="userAddress" rows="4" placeholder="Address"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleSelectGender">Branch</label>
-                                            <select class="form-control" name="branch" id="userBranch">
-                                                <%                                                    for (Branch b : branchs) {
-                                                %>
-                                                <option><%= b.getName()%></option>
-
-                                                <%
-                                                    }
-                                                %>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleSelectGender">User Role</label>
-                                            <select class="form-control" name="userRole" id="userRole">
-                                                <%
-                                                    for (UserRole ur : userRoles) {
-                                                %><option><%= ur.getRoleName()%></option><%
-                                                    }
-                                                %>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary me-2"> Save user </button>
-                                    </form>
+                                        <a class="text-black font-13 d-block pt-2 pb-2 pb-lg-0 font-weight-bold ps-4" href="#">Show more</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6 grid-margin stretch-card">
+                            <div class="col-sm-6 col-xl-4 stretch-card grid-margin">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title">Student lecture list</h4>
-                                        <div class="table-responsive">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Profile</th>
-                                                        <th>VatNo.</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Jacob</td>
-                                                        <td>53275531</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                        <div class="card-title mb-2">Upcoming events (3)</div>
+                                        <h3 class="mb-3">23 september 2019</h3>
+                                        <div class="d-flex border-bottom border-top py-3">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" checked /></label>
+                                            </div>
+                                            <div class="ps-2">
+                                                <span class="font-12 text-muted">Tue, Mar 5, 9.30am</span>
+                                                <p class="m-0 text-black"> Hey I attached some new PSD files? </p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex border-bottom py-3">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" /></label>
+                                            </div>
+                                            <div class="ps-2">
+                                                <span class="font-12 text-muted">Mon, Mar 11, 4.30 PM</span>
+                                                <p class="m-0 text-black"> Discuss performance with manager </p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex border-bottom py-3">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" /></label>
+                                            </div>
+                                            <div class="ps-2">
+                                                <span class="font-12 text-muted">Tue, Mar 5, 9.30am</span>
+                                                <p class="m-0 text-black">Meeting with Alisa</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex pt-3">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" /></label>
+                                            </div>
+                                            <div class="ps-2">
+                                                <span class="font-12 text-muted">Mon, Mar 11, 4.30 PM</span>
+                                                <p class="m-0 text-black"> Hey I attached some new PSD files? </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 grid-margin stretch-card">
+                            <div class="col-sm-6 col-xl-4 stretch-card grid-margin">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title">Student attendance</h4>
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>User</th>
-                                                        <th>Product</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Jacob</td>
-                                                        <td>Photoshop</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                        <div class="d-flex border-bottom mb-4 pb-2">
+                                            <div class="hexagon">
+                                                <div class="hex-mid hexagon-warning">
+                                                    <i class="mdi mdi-clock-outline"></i>
+                                                </div>
+                                            </div>
+                                            <div class="ps-4">
+                                                <h4 class="font-weight-bold text-warning mb-0"> 12.45 </h4>
+                                                <h6 class="text-muted">Schedule Meeting</h6>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex border-bottom mb-4 pb-2">
+                                            <div class="hexagon">
+                                                <div class="hex-mid hexagon-danger">
+                                                    <i class="mdi mdi-account-outline"></i>
+                                                </div>
+                                            </div>
+                                            <div class="ps-4">
+                                                <h4 class="font-weight-bold text-danger mb-0">34568</h4>
+                                                <h6 class="text-muted">Profile visits</h6>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex border-bottom mb-4 pb-2">
+                                            <div class="hexagon">
+                                                <div class="hex-mid hexagon-success">
+                                                    <i class="mdi mdi-laptop-chromebook"></i>
+                                                </div>
+                                            </div>
+                                            <div class="ps-4">
+                                                <h4 class="font-weight-bold text-success mb-0"> 33.50% </h4>
+                                                <h6 class="text-muted">Bounce Rate</h6>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex border-bottom mb-4 pb-2">
+                                            <div class="hexagon">
+                                                <div class="hex-mid hexagon-info">
+                                                    <i class="mdi mdi-clock-outline"></i>
+                                                </div>
+                                            </div>
+                                            <div class="ps-4">
+                                                <h4 class="font-weight-bold text-info mb-0">12.45</h4>
+                                                <h6 class="text-muted">Schedule Meeting</h6>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="hexagon">
+                                                <div class="hex-mid hexagon-primary">
+                                                    <i class="mdi mdi-timer-sand"></i>
+                                                </div>
+                                            </div>
+                                            <div class="ps-4">
+                                                <h4 class="font-weight-bold text-primary mb-0"> 12.45 </h4>
+                                                <h6 class="text-muted mb-0">Browser Usage</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xl-4 stretch-card grid-margin">
+                                <div class="card color-card-wrapper">
+                                    <div class="card-body">
+                                        <img class="img-fluid card-top-img w-100" src="../assets/images/dashboard/img_5.jpg" alt="" />
+                                        <div class="d-flex flex-wrap justify-content-around color-card-outer">
+                                            <div class="col-6 p-0 mb-4">
+                                                <div class="color-card primary m-auto">
+                                                    <i class="mdi mdi-clock-outline"></i>
+                                                    <p class="font-weight-semibold mb-0">Delivered</p>
+                                                    <span class="small">15 Packages</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 p-0 mb-4">
+                                                <div class="color-card bg-success m-auto">
+                                                    <i class="mdi mdi-tshirt-crew"></i>
+                                                    <p class="font-weight-semibold mb-0">Ordered</p>
+                                                    <span class="small">72 Items</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 p-0">
+                                                <div class="color-card bg-info m-auto">
+                                                    <i class="mdi mdi-trophy-outline"></i>
+                                                    <p class="font-weight-semibold mb-0">Arrived</p>
+                                                    <span class="small">34 Upgraded</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 p-0">
+                                                <div class="color-card bg-danger m-auto">
+                                                    <i class="mdi mdi-presentation"></i>
+                                                    <p class="font-weight-semibold mb-0">Reported</p>
+                                                    <span class="small">72 Support</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -239,16 +435,12 @@
                     dataType: 'json',
                     data: formData,
                     type: 'POST',
-                    success: function (data) {
-                        if(data.responseText==="Success"){
-                            alert("User entered Successful");
-                        }else{
-                            alert("Error In Data Insertion");
-                        }
-                    },
-                    error: function (data) {
-                        console.log(data);
-                    }});
+                    success: function (data, textStatus, jqXHR) {
+                        alert("Success");
+                    }, error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Error");
+                    }
+                });
                 event.preventDefault();
             });
 

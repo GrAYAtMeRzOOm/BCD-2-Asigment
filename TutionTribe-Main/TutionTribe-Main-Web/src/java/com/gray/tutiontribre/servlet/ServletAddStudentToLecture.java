@@ -4,15 +4,19 @@
  */
 package com.gray.tutiontribre.servlet;
 
+import com.google.gson.Gson;
 import com.gray.tutiontribe.attendance.UserAttendanceManagerRemote;
 import com.gray.tutiontribe.entity.Lecture;
 import com.gray.tutiontribe.entity.User;
 import com.gray.tutiontribe.information.LectureManagerRemote;
 import com.gray.tutiontribe.information.UserManagerRemote;
+import com.gray.tutiontribe.models.ResponsePayload;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,39 +27,46 @@ import javax.servlet.http.HttpServletResponse;
  * @author grays
  */
 @WebServlet(name = "ServletAddStudentToLecture", urlPatterns = {"/servlet-add-student-to-lecture"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"Owner","Admin"}))
 public class ServletAddStudentToLecture extends HttpServlet {
-
 
     @EJB
     LectureManagerRemote lmr;
-    
+
     @EJB
     UserManagerRemote umr;
-    
+
     @EJB
     UserAttendanceManagerRemote uamr;
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String student = request.getParameter("slist");
-        String lecture = request.getParameter("leclist");
+        Gson gson = new Gson();
         
+        String student = request.getParameter("student");
+        String lecture = request.getParameter("lecture");
+
         User duser = (User) request.getSession().getAttribute("domain-user");
-        
+
         String sid = student.split("-")[0];
         String lid = lecture.split("-")[0];
+
+        System.out.println(sid+" ******* "+lid);
         
-        Lecture lectureById = lmr.getLectureById(duser, Long.valueOf(lid)); 
-        User userById = umr.getUserById(duser, Long.valueOf(sid));
-        
+        Lecture lectureById = lmr.getLectureById(duser, Long.valueOf(lid));
+        User userById = umr.getUserByContact(duser, sid);
+
         uamr.setUserToLecture(userById, lectureById);
-        
-        
-        
+        ResponsePayload responsePayload = new ResponsePayload();
+
+        responsePayload.setCode(200);
+        responsePayload.setMassage("Success");
+
+        response.getWriter().write(gson.toJson(responsePayload));
+
     }
 
-  
     @Override
     public String getServletInfo() {
         return "Short description";

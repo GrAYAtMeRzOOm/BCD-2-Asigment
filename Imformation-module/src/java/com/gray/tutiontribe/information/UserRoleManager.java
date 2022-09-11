@@ -24,7 +24,7 @@ import javax.persistence.criteria.Root;
  *
  * @author grays
  */
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+
 @Stateless
 public class UserRoleManager implements UserRoleManagerRemote {
 
@@ -36,6 +36,7 @@ public class UserRoleManager implements UserRoleManagerRemote {
      * @param u
      * @return @throws RuntimeException
      */
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
     public List<UserRole> getAllUserRoles(User u) throws RuntimeException {
         CriteriaBuilder builder = em.getCriteriaBuilder();
@@ -54,10 +55,11 @@ public class UserRoleManager implements UserRoleManagerRemote {
         }
         return resultList;
     }
-
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Interceptors({LogInterceptor.class})
     @Override
     public UserRole getRoleByName(User u,String name) throws RuntimeException {
+        
         if (!name.equals("")) {
             Query query = em.createQuery("SELECT u FROM UserRole u WHERE u.roleName =:name");
             query.setParameter("name", name);

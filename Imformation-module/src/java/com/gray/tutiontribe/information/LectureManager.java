@@ -4,10 +4,12 @@
  */
 package com.gray.tutiontribe.information;
 
+import com.gray.tutiontribe.entity.Attendance;
 import com.gray.tutiontribe.entity.Lecture;
 import com.gray.tutiontribe.entity.User;
 import com.gray.tutiontribe.exception.DataDuplicationException;
 import com.gray.tutiontribe.exception.DataNotFoundException;
+import java.sql.Timestamp;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -23,19 +25,24 @@ import javax.persistence.criteria.Root;
  *
  * @author grays
  */
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @Stateless
 public class LectureManager implements LectureManagerRemote {
 
     @PersistenceContext(unitName = "TutionTribe-presitance-unit")
     private EntityManager em;
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
-    public Lecture saveLecture(User u,Lecture lecture) throws RuntimeException {
+    public Lecture saveLecture(User u, Lecture lecture) throws RuntimeException {
         if (lecture != null) {
             Query query = em.createQuery("SELECT l FROM Lecture l WHERE l.startedTime=:start AND l.endedTime= :end AND l.subject=:subject");
             query.setParameter("start", lecture.getStartedTime()).setParameter("end", lecture.getEndedTime()).setParameter("subject", lecture.getSubject());
             if (query.getResultList().size() < 1) {
+                Attendance attendance = new Attendance();
+                attendance.setLecture(lecture);
+                attendance.setDateTime(new Timestamp(System.currentTimeMillis()));
+                attendance.setLecturer(lecture.getPresentedUser());
+                em.persist(attendance);
                 em.persist(lecture);
             } else {
                 throw new DataDuplicationException(lecture.getSubject() + " Already exit in Database in same time");
@@ -46,8 +53,10 @@ public class LectureManager implements LectureManagerRemote {
         return lecture;
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
-    public Lecture getLectureById(User u,long id) throws RuntimeException {
+    public Lecture getLectureById(User u, long id) throws RuntimeException {
+
         if (id > 0) {
             Query query = em.createQuery("SELECT l FROM Lecture l WHERE l.id=:id");
             query.setParameter("id", id);
@@ -58,6 +67,7 @@ public class LectureManager implements LectureManagerRemote {
         }
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
     public List<Lecture> getAllLecture(User u) throws RuntimeException {
         CriteriaBuilder builder = em.getCriteriaBuilder();

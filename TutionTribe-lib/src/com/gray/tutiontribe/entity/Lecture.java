@@ -37,7 +37,7 @@ public class Lecture implements Serializable {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "presented_user_id", referencedColumnName = "id")
     private User presentedUser;
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "attendence_id", referencedColumnName = "id")
     private Attendance attendances;
 

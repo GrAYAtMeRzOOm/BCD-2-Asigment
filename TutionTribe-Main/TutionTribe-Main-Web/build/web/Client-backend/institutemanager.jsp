@@ -56,7 +56,7 @@
     <body>
         <div class="container-scroller">
             <!-- partial:partials/_sidebar.html -->
-            <jsp:include page="partials/_sidebar.html"/>
+            <jsp:include page="partials/_sidebar.jsp"/>
             <!-- partial -->
             <div class="container-fluid page-body-wrapper">
                 <!-- partial:partials/_settings-panel.html -->
@@ -138,7 +138,7 @@
                                     <div class="card-body">
                                         <h4 class="card-title">Add Student</h4>
                                         <p class="card-description">Add Student to Lecture</p>
-                                        <form class="forms-sample">
+                                        <form class="forms-sample" id="setLecture" onsubmit="return false">
                                             <div class="form-group">
                                                 <label for="slist">Select Student</label>
                                                 <select class="form-control" name="student" id="slist">
@@ -169,10 +169,20 @@
                                     <div class="card-body">
                                         <h4 class="card-title">Mark Attendance</h4>
                                         <p class="card-description">mark student attendance of lecture</p>
-                                        <form class="forms-sample">
+                                        <form class="forms-sample" id="setAttend" onsubmit="return false">
                                             <div class="form-group row">
-                                                <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Email</label>
-                                                <select class="form-control" name="lecture" id="leclist">
+                                                <label for="attendanceslist">Select Student</label>
+                                                <select class="form-control" name="student" id="attendanceslist">
+                                                    <%
+                                                        for (User u : students) {
+                                                    %><option><%= u.getContact() + "-" + u.getName()%></option><%
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="attendanceLectureList" class="col-sm-3 col-form-label">Lecture</label>
+                                                <select class="form-control" name="lecture" id="attendanceLectureList">
                                                     <%
                                                         for (Lecture lecture : lectures) {
                                                     %><option><%= lecture.getId() + "-" + lecture.getSubject()%></option><%
@@ -181,36 +191,12 @@
                                                 </select>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Email</label>
-                                                <select class="form-control" name="lecture" id="leclist">
-                                                    <%
-                                                        for (Lecture lecture : lectures) {
-                                                    %><option><%= lecture.getId() + "-" + lecture.getSubject()%></option><%
-                                                        }
-                                                    %>
+                                                <label for="attendanceStatus" class="col-sm-3 col-form-label">Status</label>
+                                                <select class="form-control" name="student" id="attendanceStatus">
+                                                    <option>Present</option>
+                                                    <option>Absent</option>
+                                                    <option>Sick</option>
                                                 </select>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="exampleInputMobile" class="col-sm-3 col-form-label">Mobile</label>
-                                                <select class="form-control" name="lecture" id="leclist">
-                                                    <%
-                                                        for (Lecture lecture : lectures) {
-                                                    %><option><%= lecture.getId() + "-" + lecture.getSubject()%></option><%
-                                                        }
-                                                    %>
-                                                </select>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="tstus" class="col-sm-3 col-form-label">Status</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="status" placeholder="status" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Re Password</label>
-                                                <div class="col-sm-9">
-                                                    <input type="password" class="form-control" id="exampleInputConfirmPassword2" placeholder="Password" />
-                                                </div>
                                             </div>
                                             <button type="submit" class="btn btn-primary me-2"> Submit </button>
                                         </form>
@@ -315,31 +301,71 @@
         <!-- End custom js for this page -->
         <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
         <script>
-                                        $("#userRegi").submit(function (event) {
-                                            var formData = {
-                                                subject: $("#subject").val(),
-                                                eTime: $("#eTime").val(),
-                                                sTime: $("#sTime").val(),
-                                                branch: $("#userBranch").val(),
-                                                user: $("#user").val()
-                                            };
-                                            $.ajax({
-                                                url: "/TutionTribe-Main-Web/servlet-add-lecture",
-                                                dataType: 'json',
-                                                data: formData,
-                                                type: 'POST',
-                                                success: function (data) {
-                                                    if (data.responseText === "Success") {
-                                                        alert("User entered Successful");
-                                                    } else {
-                                                        alert("Error In Data Insertion");
-                                                    }
-                                                },
-                                                error: function (data) {
-                                                    console.log(data);
-                                                }});
-                                            event.preventDefault();
-                                        });
+                                            $("#userRegi").submit(function (event) {
+                                                var formData = {
+                                                    subject: $("#subject").val(),
+                                                    eTime: $("#eTime").val(),
+                                                    sTime: $("#sTime").val(),
+                                                    branch: $("#userBranch").val(),
+                                                    user: $("#user").val()
+                                                };
+                                                $.ajax({
+                                                    url: "/TutionTribe-Main-Web/servlet-add-lecture",
+                                                    dataType: 'json',
+                                                    data: formData,
+                                                    type: 'POST',
+                                                    success: function (xhr) {
+                                                        if (xhr.status === 200) {
+                                                            alert("User entered Successful");
+                                                        } else {
+                                                            alert("Error In Data Insertion");
+                                                        }
+                                                    },
+                                                    error: function (data) {
+                                                        console.log(data);
+                                                    }});
+                                                event.preventDefault();
+                                            });
+
+                                            $("#setLecture").submit(function (event) {
+                                                var formData = {
+                                                    student: $("#slist").val(),
+                                                    lecture: $("#leclist").val()
+                                                };
+                                                $.ajax({
+                                                    url: "/TutionTribe-Main-Web/servlet-add-student-to-lecture",
+                                                    dataType: 'json',
+                                                    data: formData,
+                                                    type: 'POST',
+                                                    success: function (xhr) {
+                                                        alert("Success");
+                                                    },
+                                                    error: function (data) {
+                                                        alert("Error");
+                                                        console.log(data);
+                                                    }});
+                                                event.preventDefault();
+                                            });
+                                            $("#setAttend").submit(function (event) {
+                                                var formData = {
+                                                    student: $("#attendanceslist").val(),
+                                                    lecture: $("#attendanceLectureList").val(),
+                                                    status: $("#attendanceStatus").val()
+                                                };
+                                                $.ajax({
+                                                    url: "/TutionTribe-Main-Web/servlet-mark-student-attendance",
+                                                    dataType: 'json',
+                                                    data: formData,
+                                                    type: 'POST',
+                                                    success: function (xhr) {
+                                                        alert("Success");
+                                                    },
+                                                    error: function (data) {
+                                                        alert("Error");
+                                                        console.log(data);
+                                                    }});
+                                                event.preventDefault();
+                                            });
 
         </script>
     </body>

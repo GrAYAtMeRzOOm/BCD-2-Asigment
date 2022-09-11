@@ -21,6 +21,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author grays
  */
 @WebServlet(name = "ServletUserRegister", urlPatterns = {"/servlet-user-register"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"Owner","Admin"}))
 public class ServletUserRegister extends HttpServlet {
 
     @EJB
@@ -86,7 +89,6 @@ public class ServletUserRegister extends HttpServlet {
         if (saveUser != null) {
                 responsePayload.setCode(200);
                 responsePayload.setMassage("Success");
-                responsePayload.setPayload(saveUser);
             } else {
                 responsePayload.setCode(200);
                 responsePayload.setMassage("Error in Data Saving");

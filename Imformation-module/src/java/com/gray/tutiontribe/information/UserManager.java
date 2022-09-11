@@ -26,13 +26,13 @@ import javax.persistence.criteria.Root;
  *
  * @author grays
  */
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @Stateless
 public class UserManager implements UserManagerRemote {
 
     @PersistenceContext(unitName = "TutionTribe-presitance-unit")
     private EntityManager em;
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
     public User saveUser(User user, UserRole role, Branch branch) {
         if (user != null) {
@@ -51,6 +51,7 @@ public class UserManager implements UserManagerRemote {
         return user;
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
     public User getUserById(User u, long id) throws RuntimeException {
         if (id > 0) {
@@ -63,8 +64,10 @@ public class UserManager implements UserManagerRemote {
         }
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
     public User getUserByContact(User u, String contact) {
+
         if (!contact.equals("")) {
             Query query = em.createQuery("SELECT u FROM User u WHERE u.contact =:contact");
             query.setParameter("contact", contact);
@@ -75,8 +78,10 @@ public class UserManager implements UserManagerRemote {
         }
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
     public List<User> getAllUsers(User u) throws RuntimeException {
+
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root<User> root = query.from(User.class);
@@ -85,6 +90,7 @@ public class UserManager implements UserManagerRemote {
 
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
     public User userLogin(String email, String password) throws RuntimeException {
         if (!email.equals("") || !password.equals("")) {
@@ -105,14 +111,16 @@ public class UserManager implements UserManagerRemote {
         }
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
     public List<User> getAllUsersByRole(String role) throws RuntimeException {
+        em.getTransaction().commit();
         if (!role.equals("")) {
             Query query = em.createQuery("SELECT u FROM User u WHERE u.userRole.roleName =:role");
             query.setParameter("role", role);
             List<User> users = new ArrayList<>();
             for (Object object : query.getResultList()) {
-                users.add((User)object);
+                users.add((User) object);
             }
             return users;
         } else {

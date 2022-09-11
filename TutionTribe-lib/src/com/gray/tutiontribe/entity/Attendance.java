@@ -33,7 +33,7 @@ public class Attendance implements Serializable {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "lecturer_id", referencedColumnName = "id")
     private User lecturer;
-    @OneToMany(mappedBy = "attendance",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "attendance",fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     private Set<UserAttendance> userAttendances;
 
     @ManyToOne

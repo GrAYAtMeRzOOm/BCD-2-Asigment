@@ -3,14 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-Main/TutionTribe-Main-Web/web/Client-backend/index.jsp</file>
+            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-Main/TutionTribe-Main-Web/src/java/com/gray/tutiontribre/servlet/ServletAddStudentToLecture.java</file>
             <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-Main/TutionTribe-Main-Web/src/java/com/gray/tutiontribre/servlet/ServletUserLogin.java</file>
-            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-Main/TutionTribe-Main-Web/web/Client-backend/partials/_sidebar.html</file>
-            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-Main/TutionTribe-Main-Web/web/Client-backend/partials/_settings-panel.html</file>
+            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-Main/TutionTribe-Main-Web/src/java/com/gray/tutiontribre/servlet/ServletGetStudentByLecture.java</file>
             <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-Main/TutionTribe-Main-Web/src/java/com/gray/tutiontribre/servlet/ServletAddLecture.java</file>
+            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-Main/TutionTribe-Main-Web/src/java/com/gray/tutiontribe/security/SecurityAuthentication.java</file>
+            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-Main/TutionTribe-Main-Web/src/java/com/gray/tutiontribre/servlet/ServletMarkAttendance.java</file>
+            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-Main/TutionTribe-Main-Web/src/java/com/gray/tutiontribre/servlet/ServletMarkStudentAttendance.java</file>
             <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-Main/TutionTribe-Main-Web/web/Client-backend/institutemanager.jsp</file>
             <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-Main/TutionTribe-Main-Web/src/java/com/gray/tutiontribre/servlet/ServletUserRegister.java</file>
-            <file>file:/C:/Users/grays/Documents/NetBeansProjects/TutionTribe-Main/TutionTribe-Main-Web/web/Client-backend/partials/_navbar.html</file>
         </group>
     </open-files>
 </project-private>
