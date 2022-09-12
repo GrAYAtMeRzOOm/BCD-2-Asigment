@@ -43,7 +43,7 @@ public class WelcomeEmailInterceptor {
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("username"));//ur email
+            message.setFrom(new InternetAddress("tutiontribe@noreply.com"));//ur email
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse("abc@gmail.com"));//u will send to
             message.setSubject("Hi Newbie");

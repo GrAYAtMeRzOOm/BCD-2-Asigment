@@ -184,11 +184,9 @@
                                                         dataType: 'json',
                                                         type: 'POST',
                                                         success: function (data, textStatus, jqXHR) {
-                                                            alert("Success");
                                                             window.location.replace("/TutionTribe-Main-Web/Client-backend/User-login");
                                                         }, error: function (jqXHR, textStatus, errorThrown) {
                                                             window.location.replace("/TutionTribe-Main-Web/Client-backend/User-login");
-                                                            alert("Error");
                                                         }
                                                     });
 

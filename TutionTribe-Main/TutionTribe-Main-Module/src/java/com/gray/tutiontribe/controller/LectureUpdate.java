@@ -35,7 +35,7 @@ public class LectureUpdate implements LectureUpdateRemote {
     LectureManagerRemote lmr;
     
     @Schedules({
-        @Schedule(hour = "*", minute = "*/2", second = "*"),})
+        @Schedule(hour = "*", minute = "*/2")})
     @Override
     public void sendAllLecturetoUser() throws RuntimeException {
         
@@ -57,7 +57,7 @@ public class LectureUpdate implements LectureUpdateRemote {
         
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("b86e3548e7716b"));//ur email
+            message.setFrom(new InternetAddress("tutiontribe@noreply.com"));//ur email
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(owner.get(0).getEmail()));//u will send to
             message.setSubject("Lecture Record");
