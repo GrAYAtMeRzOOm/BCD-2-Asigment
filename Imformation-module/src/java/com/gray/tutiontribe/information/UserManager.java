@@ -10,11 +10,13 @@ import com.gray.tutiontribe.entity.UserRole;
 import com.gray.tutiontribe.exception.AuthenticationException;
 import com.gray.tutiontribe.exception.DataDuplicationException;
 import com.gray.tutiontribe.exception.DataNotFoundException;
+import com.gray.tutiontribe.interceptor.WelcomeEmailInterceptor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -33,6 +35,7 @@ public class UserManager implements UserManagerRemote {
     private EntityManager em;
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    @Interceptors({WelcomeEmailInterceptor.class})
     @Override
     public User saveUser(User user, UserRole role, Branch branch) {
         if (user != null) {

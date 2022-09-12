@@ -79,7 +79,7 @@
                                         <p class="m-0 pe-3">Dashboard</p>
                                     </a>
                                     <a class="ps-3 me-4" href="#">
-                                        <p class="m-0">ADE-00234</p>
+                                        <p class="m-0"><%= domainUser.getName()%></p>
                                     </a>
                                 </div>
                                 <button type="button" class="btn btn-primary mt-2 mt-sm-0 btn-icon-text">

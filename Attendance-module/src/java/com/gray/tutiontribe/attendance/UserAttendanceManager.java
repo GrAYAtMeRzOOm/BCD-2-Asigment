@@ -52,12 +52,17 @@ public class UserAttendanceManager implements UserAttendanceManagerRemote {
         return userAttendance;
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    @Interceptors({LogInterceptor.class})
     @Override
     public void setUserToLecture(User user, Lecture lecture) throws RuntimeException {
         if (user != null && lecture != null) {
-            Query query = em.createQuery("SELECT a FROM Attendance a WHERE a.lecture.id=:lId").setParameter("lId", lecture.getId());
-            if (!query.getResultList().isEmpty()) {
-                Attendance a = (Attendance) query.getSingleResult();
+            Query query1 = em.createQuery("SELECT a FROM Attendance a WHERE a.lecture.id=:lId").setParameter("lId", lecture.getId());
+            Query query2 = em.createQuery("SELECT u FROM UserAttendance u WHERE u.attendance.lecture.id=:lId AND u.user.id=:uId")
+                    .setParameter("lId", lecture.getId())
+                    .setParameter("uId", user.getId());
+            if (!query1.getResultList().isEmpty() && query2.getResultList().isEmpty()) {
+                Attendance a = (Attendance) query1.getSingleResult();
                 UserAttendance userAttendance = new UserAttendance();
                 userAttendance.setAttendance(a);
                 userAttendance.setUser(user);
@@ -70,6 +75,8 @@ public class UserAttendanceManager implements UserAttendanceManagerRemote {
         }
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    @Interceptors({LogInterceptor.class})
     @Override
     public Boolean markUserAttendance(User student, Lecture lecture, String status) throws RuntimeException {
         if (student != null && lecture != null) {
@@ -102,6 +109,7 @@ public class UserAttendanceManager implements UserAttendanceManagerRemote {
         return resultList;
     }
 
+    
     @Override
     public List<UserAttendance> getuserAttendancebyLectureId(long lid) throws RuntimeErrorException {
         if (lid > 0) {

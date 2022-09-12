@@ -87,6 +87,25 @@
                             </div>
                         </div>
                         <!-- first row starts here -->
+                        <div class="row">
+                            <div class="col-sm-12 stretch-card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Add Branch</h4>
+                                    <p class="card-description">Register Branch</p>
+                                    <form class="forms-sample" id="bRegi" onsubmit="return false">
+                                        <div class="form-group">
+                                            <label for="subject">Branch name</label>
+                                            <input type="text" class="form-control" name="bname" id="bname" placeholder="Branch name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sTime">Branch city</label>
+                                            <input type="text" class="form-control" name="bcity" id="bcity" placeholder=" city">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary me-2"> Save user </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                         <!-- doughnut chart row starts -->
                         <div class="row">
                             <div class="col-sm-12 stretch-card">
@@ -323,6 +342,27 @@
                                                                 },
                                                                 error: function (data) {
                                                                     alert("User Failed");
+                                                                    console.log(data);
+                                                                }});
+                                                            event.preventDefault();
+                                                        });
+
+                                                        $("#bRegi").submit(function (event) {
+                                                            var formData = {
+                                                                bname: $("#bname").val(),
+                                                                bcity: $("#bcity").val()
+
+                                                            };
+                                                            $.ajax({
+                                                                url: "/TutionTribe-Main-Web/servlet-branch-register",
+                                                                dataType: 'json',
+                                                                data: formData,
+                                                                type: 'POST',
+                                                                success: function (xhr) {
+                                                                    alert("Branch entered Successful");
+                                                                },
+                                                                error: function (data) {
+                                                                    alert("Branch Failed");
                                                                     console.log(data);
                                                                 }});
                                                             event.preventDefault();

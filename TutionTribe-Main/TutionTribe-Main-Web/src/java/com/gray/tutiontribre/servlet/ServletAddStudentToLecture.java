@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author grays
  */
 @WebServlet(name = "ServletAddStudentToLecture", urlPatterns = {"/servlet-add-student-to-lecture"})
-//@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"Owner","Admin"}))
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"Owner","Admin"}))
 public class ServletAddStudentToLecture extends HttpServlet {
 
     @EJB

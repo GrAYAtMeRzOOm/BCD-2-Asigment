@@ -9,11 +9,13 @@ import com.gray.tutiontribe.entity.Lecture;
 import com.gray.tutiontribe.entity.User;
 import com.gray.tutiontribe.exception.DataDuplicationException;
 import com.gray.tutiontribe.exception.DataNotFoundException;
+import com.gray.tutiontribe.interceptor.LogInterceptor;
 import java.sql.Timestamp;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -32,6 +34,7 @@ public class LectureManager implements LectureManagerRemote {
     private EntityManager em;
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    @Interceptors({LogInterceptor.class})
     @Override
     public Lecture saveLecture(User u, Lecture lecture) throws RuntimeException {
         if (lecture != null) {
@@ -54,6 +57,7 @@ public class LectureManager implements LectureManagerRemote {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    @Interceptors({LogInterceptor.class})
     @Override
     public Lecture getLectureById(User u, long id) throws RuntimeException {
         if (id > 0) {
@@ -67,6 +71,7 @@ public class LectureManager implements LectureManagerRemote {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    @Interceptors({LogInterceptor.class})
     @Override
     public List<Lecture> getAllLecture(User u) throws RuntimeException {
         CriteriaBuilder builder = em.getCriteriaBuilder();

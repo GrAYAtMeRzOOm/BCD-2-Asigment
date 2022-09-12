@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author grays
  */
 @WebServlet(name = "ServletGetStudentByLecture", urlPatterns = {"/servlet-get-student-by-lecture"})
-//@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"Owner", "Admin"}))
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"Owner", "Admin"}))
 public class ServletGetStudentByLecture extends HttpServlet {
 
     @EJB
